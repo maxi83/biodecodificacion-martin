@@ -2,7 +2,7 @@
 @{
     var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "Index";
     var pageDescription = ViewData["Description"]?.ToString()
-        ?? "GIRO: Biodescodificación y gestión emocional con Martín Ruiz. Sesiones, recursos y escritura consciente.";
+        ?? "GIRO: espacio de autoconocimiento, Biodescodificación y gestión emocional con Martín Ruiz. Sesiones, recursos y escritura consciente.";
     var pageTitle = $"{ViewData["Title"]} | GIRO — Martín Ruiz";
     var baseUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.PathBase}";
     var canonicalUrl = $"{baseUrl}{Context.Request.Path}";
@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="@pageDescription" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#20382A" />
+    <meta name="theme-color" content="#173f38" />
     <meta property="og:locale" content="es_AR" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="GIRO — Martín Ruiz" />
@@ -26,11 +26,21 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@pageTitle" />
+    <meta name="twitter:description" content="@pageDescription" />
+    <meta name="twitter:image" content="@socialImageUrl" />
     <title>@pageTitle</title>
     <link rel="canonical" href="@canonicalUrl" />
     <link rel="icon" type="image/svg+xml" href="~/images/giro-favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/premium.css" asp-append-version="true" />
+
     <script type="application/ld+json">
     {
         "@@context": "https://schema.org",
@@ -39,7 +49,7 @@
         "url": "@baseUrl",
         "email": "mailto:martin.mrj@gmail.com",
         "sameAs": ["https://instagram.com/martinruiz.bio"],
-        "knowsAbout": ["Biodescodificación", "Gestión emocional", "Escritura consciente"]
+        "knowsAbout": ["Biodescodificación", "Gestión emocional", "Escritura consciente", "Autoconocimiento"]
     }
     </script>
 </head>
@@ -83,7 +93,7 @@
                 <a class="brand brand-footer" asp-controller="Home" asp-action="Index">
                     <img class="brand-logo brand-logo-footer" src="~/images/giro-logo-transparent.webp" alt="GIRO" width="720" height="264" loading="lazy" />
                 </a>
-                <p>Biodescodificación simple y gestión emocional para observar tu historia con una mirada diferente.</p>
+                <p>Un espacio de autoconocimiento, reflexión y gestión emocional para mirar tu historia con más claridad.</p>
             </div>
             <div>
                 <h2>Explorar</h2>
