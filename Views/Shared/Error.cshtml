@@ -1,0 +1,20 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "No pudimos abrir esta página";
+}
+
+<section class="page-hero section-pad">
+    <div class="shell narrow">
+        <span class="eyebrow">GIRO</span>
+        <h1>No pudimos abrir esta página.</h1>
+        <p class="lead">Volvé al inicio o escribile directamente a Martín si necesitás orientación.</p>
+        <div class="button-row">
+            <a class="button" asp-controller="Home" asp-action="Index">Volver al inicio</a>
+            <a class="button button-outline" href="https://wa.me/543512233519" target="_blank" rel="noopener">Abrir WhatsApp</a>
+        </div>
+        @if (Model.ShowRequestId)
+        {
+            <p class="microcopy">Código de referencia: <code>@Model.RequestId</code></p>
+        }
+    </div>
+</section>

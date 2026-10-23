@@ -1,0 +1,121 @@
+@* Datos compartidos para definir el título y la descripción de cada página. *@
+@{
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "Index";
+    var pageDescription = ViewData["Description"]?.ToString()
+        ?? "GIRO: Biodescodificación y gestión emocional con Martín Ruiz. Sesiones, recursos y escritura consciente.";
+    var pageTitle = $"{ViewData["Title"]} | GIRO — Martín Ruiz";
+    var baseUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.PathBase}";
+    var canonicalUrl = $"{baseUrl}{Context.Request.Path}";
+    var socialImageUrl = $"{baseUrl}/images/giro-social.jpg";
+}
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="@pageDescription" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#20382A" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GIRO — Martín Ruiz" />
+    <meta property="og:title" content="@pageTitle" />
+    <meta property="og:description" content="@pageDescription" />
+    <meta property="og:url" content="@canonicalUrl" />
+    <meta property="og:image" content="@socialImageUrl" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>@pageTitle</title>
+    <link rel="canonical" href="@canonicalUrl" />
+    <link rel="icon" type="image/svg+xml" href="~/images/giro-favicon.svg" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "Person",
+        "name": "Martín Ruiz",
+        "url": "@baseUrl",
+        "email": "mailto:martin.mrj@gmail.com",
+        "sameAs": ["https://instagram.com/martinruiz.bio"],
+        "knowsAbout": ["Biodescodificación", "Gestión emocional", "Escritura consciente"]
+    }
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#contenido-principal">Saltar al contenido</a>
+
+    @* El encabezado conserva la navegación visible y se adapta a pantallas pequeñas. *@
+    <header class="site-header" data-site-header>
+        <div class="shell header-inner">
+            <a class="brand" asp-controller="Home" asp-action="Index" aria-label="GIRO, ir al inicio">
+                <img class="brand-logo" src="~/images/giro-logo-transparent.webp" alt="" width="720" height="264" />
+                <span class="visually-hidden">GIRO — Martín Ruiz</span>
+            </a>
+
+            <button class="menu-button" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-navigation" data-menu-button>
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="main-nav" id="main-navigation" aria-label="Navegación principal" data-main-nav>
+                <a class="@(currentAction == "Index" ? "active" : "")" asp-controller="Home" asp-action="Index">Inicio</a>
+                <a class="@(currentAction == "SobreMi" ? "active" : "")" asp-controller="Home" asp-action="SobreMi">Sobre mí</a>
+                <a class="@(currentAction == "Biodescodificacion" ? "active" : "")" asp-controller="Home" asp-action="Biodescodificacion">Biodescodificación</a>
+                <a class="@(currentAction == "Servicios" ? "active" : "")" asp-controller="Home" asp-action="Servicios">Servicios</a>
+                <a class="@(currentAction == "Mensajes" ? "active" : "")" asp-controller="Home" asp-action="Mensajes">Mensajes</a>
+                <a class="@(currentAction == "PausaPapel" ? "active" : "")" asp-controller="Home" asp-action="PausaPapel">Pausa &amp; Papel</a>
+                <a class="@(currentAction == "Contacto" ? "active" : "")" asp-controller="Home" asp-action="Contacto">Contacto</a>
+            </nav>
+
+            <a class="button button-small header-action" href="https://wa.me/543512233519" target="_blank" rel="noopener">Agendá tu sesión</a>
+        </div>
+    </header>
+
+    <main id="contenido-principal">
+        @RenderBody()
+    </main>
+
+    @* El pie reúne contacto, navegación secundaria y el alcance del acompañamiento. *@
+    <footer class="site-footer">
+        <div class="shell footer-grid">
+            <div>
+                <a class="brand brand-footer" asp-controller="Home" asp-action="Index">
+                    <img class="brand-logo brand-logo-footer" src="~/images/giro-logo-transparent.webp" alt="GIRO" width="720" height="264" loading="lazy" />
+                </a>
+                <p>Biodescodificación simple y gestión emocional para observar tu historia con una mirada diferente.</p>
+            </div>
+            <div>
+                <h2>Explorar</h2>
+                <div class="footer-links">
+                    <a asp-controller="Home" asp-action="SobreMi">Sobre mí</a>
+                    <a asp-controller="Home" asp-action="Biodescodificacion">El enfoque</a>
+                    <a asp-controller="Home" asp-action="Servicios">Servicios</a>
+                    <a asp-controller="Home" asp-action="Kit">El Kit del Giro</a>
+                    <a asp-controller="Home" asp-action="Privacy">Privacidad</a>
+                </div>
+            </div>
+            <div>
+                <h2>Contacto</h2>
+                <div class="footer-links">
+                    <a href="https://wa.me/543512233519" target="_blank" rel="noopener">+54 351 2233519</a>
+                    <a href="https://instagram.com/martinruiz.bio" target="_blank" rel="noopener">@@martinruiz.bio</a>
+                    <a href="mailto:martin.mrj@gmail.com">martin.mrj@gmail.com</a>
+                </div>
+            </div>
+        </div>
+        <div class="shell footer-bottom">
+            <span>© @DateTime.Now.Year GIRO. Todos los derechos reservados.</span>
+            <span>Acompañamiento complementario · No reemplaza atención médica, psicológica o psiquiátrica.</span>
+        </div>
+    </footer>
+
+    @* El asistente GIRO está disponible en todas las páginas porque vive dentro del layout. *@
+    <partial name="_AssistantWidget" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

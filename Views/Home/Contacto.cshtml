@@ -1,0 +1,50 @@
+@model _14__sisterma_biocodificacion.Models.ContactViewModel
+@{
+    ViewData["Title"] = "Contacto";
+    ViewData["Description"] = "Contactá a Martín Ruiz para conocer los servicios de GIRO y coordinar una sesión.";
+}
+
+<section class="page-hero section-pad">
+    <div class="shell"><span class="eyebrow">Contacto</span><h1>Empecemos a conversar</h1></div>
+</section>
+
+<section class="section-pad-topless">
+    <div class="shell contact-grid">
+        <div class="contact-copy">
+            <p class="lead">Podés escribirle directamente a Martín o dejar tus datos para preparar la conversación.</p>
+            <div class="contact-list">
+                <a href="https://wa.me/543512233519" target="_blank" rel="noopener"><b>W</b><span><small>WhatsApp</small><strong>+54 351 2233519</strong></span></a>
+                <a href="https://instagram.com/martinruiz.bio" target="_blank" rel="noopener"><b>@@</b><span><small>Instagram</small><strong>@@martinruiz.bio</strong></span></a>
+                <a href="mailto:martin.mrj@gmail.com"><b>✉</b><span><small>Email</small><strong>martin.mrj@gmail.com</strong></span></a>
+            </div>
+            <div class="privacy-box"><strong>Tu privacidad es importante.</strong><p>Los datos del formulario se utilizan únicamente para responder tu consulta.</p></div>
+        </div>
+
+        <form class="contact-form" asp-controller="Home" asp-action="Contacto" method="post" novalidate>
+            <div class="form-title"><h2>Solicitud de encuentro</h2><span>* Campos obligatorios</span></div>
+            @if (TempData["MensajeEnviado"] is string successMessage)
+            {
+                <div class="form-success" role="status">@successMessage</div>
+            }
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+            <label asp-for="Nombre"></label>
+            <input asp-for="Nombre" placeholder="¿Cómo te llamás?" />
+            <span asp-validation-for="Nombre" class="field-error"></span>
+            <div class="form-row">
+                <div><label asp-for="WhatsApp"></label><input asp-for="WhatsApp" placeholder="+54 9..." /><span asp-validation-for="WhatsApp" class="field-error"></span></div>
+                <div><label asp-for="Correo"></label><input asp-for="Correo" placeholder="tuemail@ejemplo.com" /><span asp-validation-for="Correo" class="field-error"></span></div>
+            </div>
+            <label asp-for="Modalidad">Tipo de consulta</label>
+            <select asp-for="Modalidad"><option value="Online">Quiero coordinar una sesión online</option><option value="Consulta inicial">Primero quiero hacer una consulta</option></select>
+            <label asp-for="Mensaje"></label>
+            <textarea asp-for="Mensaje" rows="5" placeholder="Contalo brevemente y con tus propias palabras..."></textarea>
+            <span asp-validation-for="Mensaje" class="field-error"></span>
+            <button class="button" type="submit">Enviar solicitud</button>
+            <small>Al enviar aceptás que Martín se comunique con vos para coordinar.</small>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
