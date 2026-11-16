@@ -4,17 +4,24 @@
     var pageDescription = ViewData["Description"]?.ToString()
         ?? "GIRO: espacio de autoconocimiento, Biodescodificación y gestión emocional con Martín Ruiz. Sesiones, recursos y escritura consciente.";
     var pageTitle = $"{ViewData["Title"]} | GIRO — Martín Ruiz";
-    var baseUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.PathBase}";
-    var canonicalUrl = $"{baseUrl}{Context.Request.Path}";
-    var socialImageUrl = $"{baseUrl}/images/giro-social.jpg";
+    const string siteUrl = "https://martinruiz.online";
+    var canonicalPath = Context.Request.Path.Value ?? "/";
+    if (canonicalPath.Length > 1)
+    {
+        canonicalPath = canonicalPath.TrimEnd('/');
+    }
+    var canonicalUrl = $"{siteUrl}{canonicalPath}";
+    var socialImageUrl = $"{siteUrl}/images/giro-social.jpg";
+    var robotsDirective = ViewData["Robots"]?.ToString() ?? "index, follow";
 }
 <!DOCTYPE html>
-<html lang="es-AR">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="@pageDescription" />
-    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Martín Ruiz" />
+    <meta name="robots" content="@robotsDirective" />
     <meta name="theme-color" content="#173f38" />
     <meta property="og:locale" content="es_AR" />
     <meta property="og:type" content="website" />
@@ -25,12 +32,17 @@
     <meta property="og:image" content="@socialImageUrl" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="GIRO — Biodescodificación y escritura expresiva con Martín Ruiz" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="@pageTitle" />
     <meta name="twitter:description" content="@pageDescription" />
     <meta name="twitter:image" content="@socialImageUrl" />
+    <meta name="twitter:image:alt" content="GIRO — Biodescodificación y escritura expresiva con Martín Ruiz" />
     <title>@pageTitle</title>
     <link rel="canonical" href="@canonicalUrl" />
+    <link rel="alternate" hreflang="es" href="@canonicalUrl" />
+    <link rel="alternate" hreflang="x-default" href="@canonicalUrl" />
+    <link rel="sitemap" type="application/xml" href="@(siteUrl + "/sitemap.xml")" />
     <link rel="icon" type="image/svg+xml" href="~/images/giro-favicon.svg" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -45,12 +57,63 @@
     <script type="application/ld+json">
     {
         "@@context": "https://schema.org",
-        "@@type": "Person",
-        "name": "Martín Ruiz",
-        "url": "@baseUrl",
-        "email": "mailto:martin.mrj@gmail.com",
-        "sameAs": ["https://instagram.com/martinruiz.bio"],
-        "knowsAbout": ["Biodescodificación", "Gestión emocional", "Escritura consciente", "Autoconocimiento"]
+        "@@graph": [
+            {
+                "@@type": "Person",
+                "@@id": "@(siteUrl + "/#martin-ruiz")",
+                "name": "Martín Ruiz",
+                "jobTitle": "Consultor en Decodificación Bioemocional",
+                "description": "Biodescodificación y escritura expresiva para acompañar procesos de autoconocimiento.",
+                "url": "@(siteUrl + "/sobre-mi")",
+                "email": "mailto:martin.mrj@gmail.com",
+                "telephone": "+54 351 2233519",
+                "homeLocation": {
+                    "@@type": "Place",
+                    "name": "La Calera, Córdoba, Argentina"
+                },
+                "sameAs": [
+                    "https://www.instagram.com/martinruiz.bio/",
+                    "https://www.youtube.com/@@bio-giro",
+                    "https://www.tiktok.com/@@martinruizjimenez",
+                    "https://www.facebook.com/share/1AC4HvErj5/"
+                ],
+                "knowsAbout": [
+                    "Biodescodificación",
+                    "Decodificación Bioemocional",
+                    "Escritura expresiva",
+                    "Gestión emocional",
+                    "Autoconocimiento"
+                ]
+            },
+            {
+                "@@type": "WebSite",
+                "@@id": "@(siteUrl + "/#website")",
+                "url": "@siteUrl",
+                "name": "GIRO — Martín Ruiz",
+                "inLanguage": "es",
+                "publisher": { "@@id": "@(siteUrl + "/#martin-ruiz")" }
+            },
+            {
+                "@@type": "Service",
+                "@@id": "@(siteUrl + "/#servicio")",
+                "name": "Biodescodificación y escritura expresiva",
+                "serviceType": [
+                    "Biodescodificación",
+                    "Decodificación Bioemocional",
+                    "Pausa & Papel"
+                ],
+                "provider": { "@@id": "@(siteUrl + "/#martin-ruiz")" },
+                "areaServed": {
+                    "@@type": "Place",
+                    "name": "Países de habla hispana"
+                },
+                "availableChannel": {
+                    "@@type": "ServiceChannel",
+                    "serviceUrl": "@(siteUrl + "/contacto")",
+                    "availableLanguage": "es"
+                }
+            }
+        ]
     }
     </script>
 </head>
@@ -110,7 +173,10 @@
                 <h2>Contacto</h2>
                 <div class="footer-links">
                     <a href="https://wa.me/543512233519" target="_blank" rel="noopener">+54 351 2233519</a>
-                    <a href="https://instagram.com/martinruiz.bio" target="_blank" rel="noopener">@@martinruiz.bio</a>
+                    <a href="https://www.instagram.com/martinruiz.bio/" target="_blank" rel="noopener">Instagram</a>
+                    <a href="https://www.youtube.com/@@bio-giro" target="_blank" rel="noopener">YouTube</a>
+                    <a href="https://www.tiktok.com/@@martinruizjimenez" target="_blank" rel="noopener">TikTok</a>
+                    <a href="https://www.facebook.com/share/1AC4HvErj5/" target="_blank" rel="noopener">Facebook</a>
                     <a href="mailto:martin.mrj@gmail.com">martin.mrj@gmail.com</a>
                 </div>
             </div>

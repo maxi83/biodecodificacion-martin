@@ -1,3 +1,4 @@
+using System.Text;
 using _14__sisterma_biocodificacion.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,41 @@ app.UseAuthorization();
 // Habilita los endpoints de controladores que usan atributos de ruta.
 app.MapStaticAssets();
 app.MapControllers();
+
+// Expone únicamente las páginas públicas que queremos que los buscadores indexen.
+const string publicSiteUrl = "https://martinruiz.online";
+var indexablePaths = new[]
+{
+    "/",
+    "/sobre-mi",
+    "/biodescodificacion",
+    "/servicios",
+    "/mensajes",
+    "/pausa-y-papel",
+    "/kit-del-giro",
+    "/contacto"
+};
+
+app.MapGet("/sitemap.xml", () =>
+{
+    var urls = string.Join(
+        Environment.NewLine,
+        indexablePaths.Select(path => $"  <url><loc>{publicSiteUrl}{path}</loc></url>"));
+
+    var sitemap =
+        $"<?xml version=\"1.0\" encoding=\"UTF-8\"?>{Environment.NewLine}" +
+        $"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">{Environment.NewLine}" +
+        $"{urls}{Environment.NewLine}</urlset>";
+
+    return Results.Text(sitemap, "application/xml", Encoding.UTF8);
+});
+
+app.MapGet("/robots.txt", () =>
+    Results.Text(
+        $"User-agent: *{Environment.NewLine}Allow: /{Environment.NewLine}{Environment.NewLine}" +
+        $"Sitemap: {publicSiteUrl}/sitemap.xml{Environment.NewLine}",
+        "text/plain",
+        Encoding.UTF8));
 
 // Conserva el patrón MVC convencional para las páginas del sitio.
 app.MapControllerRoute(
