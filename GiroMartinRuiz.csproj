@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>GiroMartinRuiz</RootNamespace>
     <AssemblyName>GiroMartinRuiz</AssemblyName>
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
 </Project>
